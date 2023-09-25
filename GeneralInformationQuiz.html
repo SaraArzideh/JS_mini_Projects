@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fi-FI">
+    <head>
+        <title>TITLE</title>
+        <meta charset="utf-8"/>
+        <title> Sara's Practices </title>
+        <style>
+        </style>
+    </head>
+    <body>
+        <h1>Information competition</h1>
+        <h3 id="title"></h3>
+        <p id="questionText"></p>
+        <button id="byButtonA"></button>
+        <br>
+        <button id="byButtonB"></button>
+        <br>
+        <p id="DataField"></p>
+        <p id="AddDataField"></p>
+
+        <script>
+
+        // Libraries and Modules
+        // Constants
+
+        const QuestionsList = [
+            {
+                question: "Which country is the largest coffee growing the world?",
+                A: "Brazil",
+                B: "USA",
+                correct: "A"
+            },
+            {
+                question: "What ocean is the largest one in the world?",
+                A: "Pacific Ocean",
+                B: "Atlantic Ocean",
+                correct: "A"
+            },
+            {
+                question: "What mountain is the highest one in the world?",
+                A: "Mont Blanc",
+                B: "Everest",
+                correct: "B"
+            },
+            {
+                question: "What is the national flower of Britain?",
+                A: "Rose",
+                B: "Tulip",
+                correct: "A"
+            },
+            {
+                question: "Which country is famous for Samba dance?",
+                A: "Argentina",
+                B: "Brazil",
+                correct: "B"
+            },
+            {
+                question: "Extra: World literacy day is celebrated on:",
+                A: "1 November",
+                B: "8 September",
+                correct: "B",
+                bonus: 2
+            }
+        ];
+
+        // Variables
+        let counter = 0;
+        let correctAnswer = 0;
+
+        // Codes to display Context
+        const title = document.getElementById("title");
+        const questionText = document.getElementById("questionText");
+        const byButtonA = document.getElementById("byButtonA");
+        const byButtonB = document.getElementById("byButtonB");
+        const DataField = document.getElementById("DataField");
+        const AddDataField = document.getElementById("AddDataField");
+
+        // Classes and objects
+        // Functions
+        function displayTitle(counter) {
+            title.innerText = `${counter+1}. question`;
+            questionText.innerText = QuestionsList[counter].question;
+            byButtonA.innerText = QuestionsList[counter].A;
+            byButtonB.innerText = QuestionsList[counter].B;
+            // Update the correct answer count
+            DataField.innerText = `You have ${correctAnswer}/${QuestionsList.length} correct answer(s) so far!`;
+        }
+
+        function correctChecker(byButtonValue) {
+            console.log(byButtonValue);
+            //if the pressed button is the same as the correct one.
+            if (QuestionsList[counter].correct === byButtonValue) {
+                    if ("bonus" in QuestionsList[counter]) {
+                        correctAnswer += 2;
+                    } else {
+                        correctAnswer++;                        
+                    }
+                    displayTitle(counter);
+            }
+            if (counter < QuestionsList.length-1) {
+                counter++;
+                displayTitle(counter);
+            } else {
+                byButtonA.disabled = true;
+                byButtonB.disabled = true;
+                switch(true) {
+                    case correctAnswer >= 5:
+                        AddDataField.innerText = `The quiz is over! Your result: Excellent`;
+                    break;
+                    case correctAnswer === 4:
+                        AddDataField.innerText = `The quiz is over! Your result: Very Good`;
+                    break;
+                    case correctAnswer >= 2 && correctAnswer <= 3:
+                        AddDataField.innerText = `The quiz is over! Your result: Satisfactory`;
+                    break;
+                    case correctAnswer === 1:
+                        AddDataField.innerText = `The quiz is over! Your result: Under average`;
+                    break;
+                    case correctAnswer === 0:
+                        AddDataField.innerText = `The quiz is over! Your result: Poor `;
+                    break;
+                }
+            }
+        }
+
+        // Event handler setting
+        byButtonA.addEventListener("click", () => correctChecker("A"));
+        byButtonB.addEventListener("click", () => correctChecker("B"));
+
+        // Search for Data
+        displayTitle(counter);
+
+        
+        </script>
+    </body>
+</html>

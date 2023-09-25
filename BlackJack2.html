@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Sara's Practices </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Jack</title>
+    <style>
+        /* Adding my CSS styles here */
+     </style>
+</head>
+<body>
+    <h1>Let's play Black-Jack</h1>
+    <p>Start!</p>
+    <div>
+        <h2>Your Hand</h2>
+        <div id="playerHand"></div>
+        <h2>Dealer's Hand</h2>
+        <div id="dealerHand"></div>
+    </div>
+    <button id="hit">Hit</button>
+    <button id="stand">Stand</button>
+    <p id="message"></p>
+        
+        <script>
+            const playerHand = document.getElementById("playerHand");
+            const dealerHand = document.getElementById("dealerHand");
+            const hitButton = document.getElementById("hit");
+            const standButton = document.getElementById("stand");
+            const message = document.getElementById("message");
+
+            const cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+
+            let playerCards = [];
+            let dealerCards = [];
+
+            hitButton.addEventListener("click", function() {
+                playerCards.push(drawCard());
+                displayCards(playerHand, playerCards);
+                if (calculateTotal(playerCards) > 21) {
+                    endGame("You busted! Dealer wins.");
+                }
+            });
+
+            standButton.addEventListener("click", function() {
+                while (calculateTotal(dealerCards) < 17) {
+                    dealerCards.push(drawCard());
+                }
+                displayCards(dealerHand, dealerCards);
+                
+                const playerTotal = calculateTotal(playerCards);
+                const dealerTotal = calculateTotal(dealerCards);
+
+                if (dealerTotal > 21 || playerTotal > dealerTotal) {
+                    endGame("Congratulations, you win!");
+                } else if (playerTotal < dealerTotal) {
+                    endGame("Dealer wins.");
+                } else {
+                    endGame("It's a tie!");
+                }
+            });
+
+            function drawCard() {
+                const randomIndex = Math.floor(Math.random() * cards.length);
+                return cards[randomIndex];
+            }
+
+            function displayCards(element, cardArray) {
+                element.textContent = cardArray.join(" ");
+            }
+
+            function calculateTotal(cardArray) {
+                let total = 0;
+                let aces = 0;
+
+                cardArray.forEach(card => {
+                    if (card === 'A') {
+                        total += 11;
+                        aces++;
+                    } else if (card === 'K' || card === 'Q' || card === 'J') {
+                        total += 10;
+                    } else {
+                        total += parseInt(card);
+                    }
+                });
+
+                while (total > 21 && aces > 0) {
+                    total -= 10;
+                    aces--;
+                }
+
+                return total;
+            }
+
+            function endGame(resultMessage) {
+                message.textContent = resultMessage;
+                hitButton.disabled = true;
+                standButton.disabled = true;
+            }
+
+            // Start the game
+            playerCards.push(drawCard(), drawCard());
+            dealerCards.push(drawCard(), drawCard());
+            displayCards(playerHand, playerCards);
+            displayCards(dealerHand, ["?", dealerCards[1]]);
+</script>
+</body>
+</html>

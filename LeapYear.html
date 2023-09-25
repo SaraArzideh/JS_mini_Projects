@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fi-FI">
+<head>
+    <meta charset="utf-8"
+    <title> Sara's Practices </title>
+</head>
+<body>
+    <h1>Leap Year</h1>
+    <input id="inputfield" type="number"> </input>
+    <input id="inputsubmit" type="submit" value="Check Leap-Year Input"></input>
+    <p id="outputfield"></p>
+
+
+    <script>
+            // Write a program with a function that declares is it a leap year
+            // Guidance: To determine if a year is a leap year, follow these three rules:
+            // Rule 1: Leap year occures every four years
+            // Rule 2: Leap-Year is not divisible by 100 (Except those are divisible by 400)
+            // Rule 3: Leap-year can be divisible by 400
+            
+        // Libraries and Modules
+        // Constants
+        // Variables
+        // Context between screen and code
+
+        // way 1: event-handling and Alert
+        const inputfield = document.getElementById("inputfield")
+        const inputsubmit = document.getElementById("inputsubmit")
+        const outputfield = document.getElementById("outputfield")
+
+
+        // Classes and Objects
+        // Functions
+        
+        function myEventHandler() {
+            let inputYear = Number(inputfield.value);
+            console.log(inputYear);
+            outputfield.innerText = inputYear.toString();
+            inputfield.value="";
+            inputfield.focus();
+            if((inputYear%4 === 0 && inputYear%100!=0) || (inputYear%400 === 0)){
+            alert("Year "+ inputYear + " is a leap year!");
+        }else{
+            alert("Year "+ inputYear + " is not a leap year!");
+        }         
+
+        }
+        // Settings of event handlers
+        // Get the value of inputfield when inputsubmit is pressed
+        inputsubmit.addEventListener("click", myEventHandler);
+        inputfield.addEventListener("change", myEventHandler);
+
+        //Call to the focus() method on a variable named inputfield. 
+        window.onload= function(){inputfield.focus();}
+
+        // Search for Data
+   
+
+/*    
+
+        // way 2: prompt and console.log
+        let inputYear= prompt("Which year do you like to check for leap-yesr status?");
+        if(inputYear%4 === 0){
+            if(inputYear%100 === 0){
+                if(inputYear%400 === 0){
+                    console.log("Year "+ inputYear + " is a leap year!")
+                }else{
+                    console.log("Year "+ inputYear + " is not a leap year!")
+                }
+            }else{
+                console.log("Year "+ inputYear + " is a leap year!")
+            }
+        }else{
+            console.log("Year "+ inputYear + " is not a leap year!")
+        }
+*/
+
+/*
+        // way 3: Propmt and console.log
+        let inputYear= prompt("Which year do you like to check for leap-yesr status?");
+        if((inputYear%4 === 0 && inputYear%100!=0) || (inputYear%400 === 0)){
+             console.log("Year "+ inputYear + " is a leap year!")
+        }else{
+        console.log("Year "+ inputYear + " is not a leap year!")
+        }         
+*/    
+      
+
+    </script>
+</body>
+</html>

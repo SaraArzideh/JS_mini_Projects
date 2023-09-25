@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Sara's Practices </title>
+    <title>Tic-Tac-Toe</title>
+    <style>
+        /* Adding my CSS styles here */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 150px);
+            gap: 15px;
+            background-color: #304d3b;
+            padding: 2vw; /* Relative padding */
+            border-radius: 15px; /* Rounded corners for container */
+            box-shadow: 0px 0px 15px rgb(79, 80, 80); /* Shadow for a floating effect */
+        }
+        .grid-container button {
+            width: 150px;
+            height: 150px;
+            font-size: 100px;
+            background-color: rgba(237, 247, 240, 0.944);
+            border: 2px solid rgb(12, 12, 12);
+            text-align: center;
+            transition: all 0.3s; /* Smooth transition for hover effects */
+            border-radius: 10px; /* Rounded corners for buttons */
+        }
+        .grid-container button:hover {
+            background-color: rgba(211, 211, 206, 0.989); /* Slightly darker on hover */
+        }
+        .grid-container button:active {
+            transform: scale(0.95); /* Slightly scales down the button when clicked */
+        }
+    </style>
+</head>
+<body>
+    <h1>Let's play Tic-Tac-Toe</h1>
+    <p>Choose a cell, and let the game begin!"</p>
+
+    <div class="grid-container">
+        <button onclick="changeButtonText(0)"></button>
+        <button onclick="changeButtonText(1)"></button>
+        <button onclick="changeButtonText(2)"></button>
+        <button onclick="changeButtonText(3)"></button>
+        <button onclick="changeButtonText(4)"></button>
+        <button onclick="changeButtonText(5)"></button>
+        <button onclick="changeButtonText(6)"></button>
+        <button onclick="changeButtonText(7)"></button>
+        <button onclick="changeButtonText(8)"></button>
+    </div>
+
+    <script>
+        const buttons = document.querySelectorAll('.grid-container button');
+        //player1 variable is set to 'X'
+        let Player = 'X';
+
+        
+        // Function to change the button's text
+        function changeButtonText(position) {
+            // Determine which button(0-8) in the 3x3 grid was clicked
+            const button = buttons[position];
+            //Set the textContent property of the clicked button to the player's symbol.
+            if (button.textContent === '') {
+                button.textContent = Player;
+                // Call the winDefiner to check for a winner
+                winDefiner();
+               // Switch the player after checking for the winner
+                Player = Player === 'X' ? 'O' : 'X';
+            } else {
+                alert("This cell is already taken. Choose another one.");
+            }
+        }
+
+        function winDefiner(){
+            if(buttons.textContent !== ''){
+                if ((buttons[0].textContent === buttons[1].textContent) && (buttons[1].textContent === buttons[2].textContent) && buttons[0].textContent !== '' ||
+                    (buttons[3].textContent === buttons[4].textContent) && (buttons[4].textContent === buttons[5].textContent) && buttons[3].textContent !== '' ||
+                    (buttons[6].textContent === buttons[7].textContent) && (buttons[7].textContent ===buttons[8].textContent) && buttons[6].textContent !== '' ||
+                    (buttons[0].textContent === buttons[3].textContent) && (buttons[3].textContent ===buttons[6].textContent) && buttons[0].textContent !== '' ||
+                    (buttons[1].textContent === buttons[4].textContent) && (buttons[4].textContent ===buttons[7].textContent) && buttons[1].textContent !== '' ||
+                    (buttons[2].textContent === buttons[5].textContent) && (buttons[5].textContent ===buttons[8].textContent) && buttons[2].textContent !== '' ||
+                    (buttons[0].textContent === buttons[4].textContent) && (buttons[4].textContent ===buttons[8].textContent) && buttons[0].textContent !== '' ||
+                    (buttons[2].textContent === buttons[4].textContent) && (buttons[4].textContent ===buttons[6].textContent) && buttons[2].textContent !== ''){
+                        alert(`${Player} player wins the game!`);
+                        alert("Try a new game!");
+                        resetGame();
+                    } else if ([...buttons].every(button => button.textContent)) {
+                        alert(`No one wins the game!`);
+                        alert("Try a new game!");
+                        resetGame();                    }        
+            }
+        }
+        function resetGame() {
+            buttons.forEach(button => button.textContent = '');
+            Player = 'X';  // reset to default player
+        }
+
+    </script>
+</body>
+</html>
+
